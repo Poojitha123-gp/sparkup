@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SparkUp — Master DevOps, Cloud & Programming</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --blue-50:#E6F1FB;--blue-100:#B5D4F4;--blue-200:#85B7EB;
+  --blue-400:#378ADD;--blue-600:#185FA5;--blue-700:#134d87;--blue-800:#0C447C;--blue-900:#042C53;
+  --gray-50:#F8FAFC;--gray-100:#F1F5F9;--gray-200:#E2E8F0;
+  --gray-400:#94A3B8;--gray-500:#64748B;--gray-600:#475569;--gray-700:#334155;--gray-800:#1E293B;--gray-900:#0F172A;
+  --white:#fff;
+  --font:'Plus Jakarta Sans',sans-serif;--mono:'JetBrains Mono',monospace;
+  --r:12px;--rl:20px;--rxl:28px;
+  --sh-sm:0 2px 8px rgba(14,60,120,0.06);
+  --sh-md:0 8px 28px rgba(14,60,120,0.11);
+  --sh-lg:0 20px 56px rgba(14,60,120,0.15);
+}
+html{scroll-behavior:smooth;}
+body{font-family:var(--font);color:var(--gray-800);background:var(--white);line-height:1.65;-webkit-font-smoothing:antialiased;}
+a{text-decoration:none;color:inherit;}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 6%;height:68px;background:rgba(255,255,255,0.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--gray-200);}
+.logo{display:flex;align-items:center;gap:10px;}
+.logo-icon{width:38px;height:38px;background:var(--blue-600);border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.logo-icon img{width:100%;height:100%;object-fit:cover;}
+.logo-text{font-size:19px;font-weight:800;color:var(--gray-900);letter-spacing:-0.5px;}
+.logo-text span{color:var(--blue-600);}
+.logo-sub{font-size:10px;color:var(--gray-400);font-weight:500;letter-spacing:1px;margin-top:1px;}
+.nav-links{display:flex;gap:30px;}
+.nav-links a{font-size:14px;font-weight:600;color:var(--gray-600);transition:color .2s;cursor:pointer;}
+.nav-links a:hover{color:var(--blue-600);}
+.nav-end{display:flex;align-items:center;gap:10px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;cursor:pointer;border:none;font-family:var(--font);font-weight:700;border-radius:9px;transition:all .2s;font-size:14px;}
+.btn-ghost{padding:9px 20px;background:transparent;color:var(--gray-700);border:1.5px solid var(--gray-200);}
+.btn-ghost:hover{border-color:var(--blue-400);color:var(--blue-600);}
+.btn-primary{padding:10px 22px;background:var(--blue-600);color:#fff;}
+.btn-primary:hover{background:var(--blue-800);transform:translateY(-1px);box-shadow:var(--sh-md);}
+.btn-lg{padding:15px 34px;font-size:15px;border-radius:11px;}
+.btn-white{padding:14px 30px;font-size:15px;border-radius:11px;background:#fff;color:var(--blue-700);font-family:var(--font);font-weight:700;border:none;cursor:pointer;}
+.btn-white:hover{background:var(--blue-50);box-shadow:var(--sh-md);}
+.btn-outline-w{padding:13px 28px;font-size:15px;border-radius:11px;background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.4);font-weight:700;font-family:var(--font);cursor:pointer;}
+.btn-outline-w:hover{background:rgba(255,255,255,0.1);}
+
+/* HERO */
+.hero{background:linear-gradient(145deg,var(--blue-900) 0%,var(--blue-800) 50%,#1a6bb5 100%);color:#fff;padding:80px 6% 72px;position:relative;overflow:hidden;min-height:600px;display:flex;flex-direction:column;justify-content:center;}
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,0.06) 1px,transparent 1px);background-size:32px 32px;}
+.hero-glow{position:absolute;top:-120px;right:-80px;width:500px;height:500px;background:radial-gradient(circle,rgba(55,138,221,0.25) 0%,transparent 70%);pointer-events:none;}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);padding:6px 16px;border-radius:100px;font-size:12px;font-weight:600;margin-bottom:28px;position:relative;backdrop-filter:blur(8px);}
+.hero-pill-dot{width:7px;height:7px;border-radius:50%;background:#4ADE80;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;position:relative;}
+.hero-tag{padding:5px 14px;border-radius:100px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);font-size:12px;font-weight:600;}
+.hero h1{font-size:clamp(36px,4.5vw,60px);font-weight:800;line-height:1.08;letter-spacing:-2px;margin-bottom:20px;position:relative;max-width:660px;}
+.hero h1 .hl{color:#93C5FD;}
+.hero-desc{font-size:16px;color:rgba(255,255,255,0.85);max-width:540px;margin-bottom:20px;position:relative;line-height:1.7;}
+.hero-lbg{font-size:22px;font-weight:900;letter-spacing:2px;color:#93C5FD;margin-bottom:28px;position:relative;font-family:var(--mono);}
+.hero-features{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px;position:relative;}
+.hero-feat{display:flex;align-items:center;gap:6px;font-size:13px;color:rgba(255,255,255,0.8);font-weight:500;}
+.hero-feat-check{width:18px;height:18px;border-radius:50%;background:rgba(74,222,128,0.2);border:1px solid rgba(74,222,128,0.5);display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
+.hero-cta{display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:relative;margin-bottom:56px;}
+.hero-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;border-top:1px solid rgba(255,255,255,0.1);padding-top:36px;max-width:560px;}
+.hero-stat{padding-right:28px;border-right:1px solid rgba(255,255,255,0.1);}
+.hero-stat:last-child{border-right:none;}
+.hero-stat-val{font-size:26px;font-weight:800;font-family:var(--mono);letter-spacing:-1px;}
+.hero-stat-lbl{font-size:11px;color:rgba(255,255,255,0.5);margin-top:3px;font-weight:500;line-height:1.4;}
+
+/* HERO BRAND CARD (Right Side) */
+.hero-brand-card{position:absolute;right:6%;top:50%;transform:translateY(-50%);background:rgba(15,23,42,0.85);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;width:340px;padding:32px 24px;box-shadow:0 32px 80px rgba(0,0,0,0.45);text-align:center;}
+.hero-logo-box{width:80px;height:80px;background:var(--blue-600);border-radius:20px;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;overflow:hidden;box-shadow:0 12px 28px rgba(24,95,165,0.4);}
+.hero-logo-box img{width:100%;height:100%;object-fit:cover;}
+.hero-card-title{font-size:22px;font-weight:800;color:#fff;margin-bottom:4px;}
+.hero-card-sub{font-size:12px;color:#93C5FD;font-weight:600;letter-spacing:1px;margin-bottom:20px;}
+.hero-card-list{text-align:left;display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(255,255,255,0.1);padding-top:20px;}
+.hero-card-item{display:flex;align-items:center;gap:10px;font-size:13px;color:rgba(255,255,255,0.85);font-weight:500;}
+.hero-card-item span{color:#4ADE80;}
+
+/* SECTIONS */
+section{padding:88px 6%;}
+.sec-chip{display:inline-block;background:var(--blue-50);color:var(--blue-700);font-size:11px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:14px;border:1px solid var(--blue-100);}
+h2{font-size:clamp(26px,3vw,40px);font-weight:800;color:var(--gray-900);letter-spacing:-1px;line-height:1.15;}
+.sec-sub{font-size:16px;color:var(--gray-500);margin-top:12px;max-width:500px;line-height:1.7;}
+
+/* HOW IT WORKS / ABOUT */
+#about{background:var(--gray-50);}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:52px;}
+.step-card{background:#fff;border-radius:var(--rl);border:1px solid var(--gray-200);padding:36px 32px;position:relative;overflow:hidden;transition:all .3s;}
+.step-card:hover{transform:translateY(-4px);box-shadow:var(--sh-lg);border-color:var(--blue-200);}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue-600),var(--blue-400));}
+.step-num{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--blue-400);letter-spacing:1px;background:var(--blue-50);padding:4px 10px;border-radius:100px;margin-bottom:20px;display:inline-block;border:1px solid var(--blue-100);}
+.step-icon{font-size:36px;margin-bottom:18px;}
+.step-title{font-size:18px;font-weight:800;color:var(--gray-900);margin-bottom:10px;}
+.step-desc{font-size:14px;color:var(--gray-500);line-height:1.7;}
+
+/* COURSES */
+#courses{background:#fff;}
+.courses-filters{display:flex;align-items:center;gap:10px;margin-bottom:36px;flex-wrap:wrap;}
+.filter-btn{padding:8px 18px;border-radius:100px;border:1.5px solid var(--gray-200);background:#fff;font-size:13px;font-weight:600;color:var(--gray-600);cursor:pointer;transition:all .2s;font-family:var(--font);}
+.filter-btn:hover,.filter-btn.active{background:var(--blue-600);color:#fff;border-color:var(--blue-600);}
+.courses-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px;}
+.course-card{background:#fff;border-radius:var(--rl);border:1px solid var(--gray-200);overflow:hidden;transition:all .28s;cursor:pointer;}
+.course-card:hover{transform:translateY(-5px);box-shadow:var(--sh-lg);border-color:var(--blue-200);}
+.course-thumb{height:160px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;}
+.course-live-badge{position:absolute;top:12px;right:12px;background:rgba(239,68,68,0.9);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:100px;letter-spacing:.5px;display:flex;align-items:center;gap:4px;}
+.live-dot{width:5px;height:5px;border-radius:50%;background:#fff;animation:pulse 1.2s infinite;}
+.course-body{padding:22px;}
+.level-badge{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 10px;border-radius:5px;margin-bottom:10px;display:inline-block;}
+.l-beg{background:#DCFCE7;color:#15803D;}.l-int{background:#FEF3C7;color:#92400E;}.l-adv{background:#FCE7F3;color:#9D174D;}
+.course-title{font-size:16px;font-weight:800;color:var(--gray-900);margin-bottom:6px;}
+.course-desc{font-size:13px;color:var(--gray-500);line-height:1.6;margin-bottom:14px;}
+.course-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;}
+.course-tag{font-size:11px;font-weight:600;padding:3px 9px;background:var(--blue-50);color:var(--blue-700);border-radius:5px;border:1px solid var(--blue-100);}
+.course-meta{display:flex;gap:14px;font-size:12px;color:var(--gray-400);}
+.course-footer{padding:16px 22px;border-top:1px solid var(--gray-100);display:flex;align-items:center;justify-content:space-between;}
+.course-price{font-size:19px;font-weight:800;color:var(--blue-700);font-family:var(--mono);}
+.course-price-free{color:#15803D;}
+.course-old{font-size:12px;color:var(--gray-400);text-decoration:line-through;margin-left:4px;}
+.enroll-btn{padding:9px 18px;font-size:13px;font-weight:700;background:var(--blue-600);color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:var(--font);transition:all .2s;}
+.enroll-btn:hover{background:var(--blue-800);}
+
+/* WORKSHOP */
+#workshop{background:var(--gray-50);}
+.workshop-card-large{background:#fff;border-radius:var(--rxl);border:1px solid var(--gray-200);padding:40px;box-shadow:var(--sh-md);display:grid;grid-template-columns:1.2fr 0.8fr;gap:40px;align-items:center;margin-top:36px;}
+.workshop-list{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:36px;}
+.workshop-list .workshop-card-large{margin-top:0;padding:28px;display:flex;flex-direction:column;align-items:stretch;gap:24px;}
+.workshop-list .workshop-card-large>div:last-child{margin-top:auto;}
+.workshop-info h3{font-size:24px;font-weight:800;color:var(--gray-900);margin-bottom:12px;}
+.workshop-info p{font-size:14px;color:var(--gray-500);margin-bottom:20px;line-height:1.7;}
+.workshop-details{display:flex;flex-direction:column;gap:10px;margin-bottom:24px;}
+.ws-item{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--gray-700);}
+
+/* INSTRUCTORS */
+#instructors{background:#fff;}
+.instructors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px;margin-top:48px;}
+.instructor-card{background:#fff;border-radius:var(--rl);border:1px solid var(--gray-200);padding:28px;text-align:center;transition:all .25s;}
+.instructor-card:hover{transform:translateY(-3px);box-shadow:var(--sh-md);border-color:var(--blue-200);}
+.instructor-avatar{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;margin:0 auto 14px;color:#fff;}
+.instructor-name{font-size:16px;font-weight:800;color:var(--gray-900);margin-bottom:4px;}
+.instructor-role{font-size:13px;color:var(--blue-600);font-weight:600;margin-bottom:12px;}
+.instructor-bio{font-size:12px;color:var(--gray-500);line-height:1.6;margin-bottom:16px;}
+.instructor-skills{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:16px;}
+.iskill{font-size:10px;font-weight:700;padding:3px 9px;background:var(--blue-50);color:var(--blue-700);border-radius:5px;border:1px solid var(--blue-100);}
+.instructor-stats{display:flex;justify-content:center;gap:20px;padding-top:14px;border-top:1px solid var(--gray-100);}
+.istat-val{font-size:16px;font-weight:800;color:var(--gray-900);font-family:var(--mono);}
+.istat-lbl{font-size:10px;color:var(--gray-400);margin-top:2px;}
+
+/* FEATURES */
+#features{background:var(--gray-50);}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.feature-card{background:#fff;border-radius:var(--rl);border:1px solid var(--gray-200);padding:28px;transition:all .25s;position:relative;overflow:hidden;}
+.feature-card:hover{border-color:var(--blue-200);box-shadow:var(--sh-md);}
+.feature-card:hover::after{opacity:1;}
+.feature-card::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--blue-50),transparent);opacity:0;transition:opacity .3s;}
+.feature-icon-wrap{width:52px;height:52px;border-radius:14px;background:var(--blue-50);border:1px solid var(--blue-100);display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:18px;position:relative;z-index:1;}
+.feature-title{font-size:16px;font-weight:800;color:var(--gray-900);margin-bottom:8px;position:relative;z-index:1;}
+.feature-desc{font-size:13px;color:var(--gray-500);line-height:1.7;position:relative;z-index:1;}
+
+/* TESTIMONIALS */
+#testimonials{background:linear-gradient(145deg,var(--blue-900),var(--blue-800));color:#fff;padding:88px 6%;}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;}
+.testi-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:var(--rl);padding:28px;transition:all .25s;}
+.testi-card:hover{background:rgba(255,255,255,0.1);transform:translateY(-2px);}
+.testi-stars{color:#FBBF24;font-size:14px;margin-bottom:14px;letter-spacing:2px;}
+.testi-text{font-size:14px;line-height:1.7;color:rgba(255,255,255,0.82);margin-bottom:20px;font-style:italic;}
+.testi-author{display:flex;align-items:center;gap:12px;}
+.testi-avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;}
+.testi-name{font-size:14px;font-weight:700;color:#fff;}
+.testi-detail{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;}
+.testi-company{display:inline-block;font-size:10px;font-weight:700;background:rgba(74,222,128,0.15);color:#4ADE80;padding:2px 9px;border-radius:100px;border:1px solid rgba(74,222,128,0.25);margin-top:4px;}
+
+/* CTA */
+#cta{background:var(--gray-50);text-align:center;}
+.cta-inner{max-width:620px;margin:0 auto;}
+.cta-inner .sec-sub{margin:14px auto 36px;text-align:center;}
+.cta-btns{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.cta-checks{display:flex;justify-content:center;gap:20px;margin-top:16px;flex-wrap:wrap;}
+.cta-check{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--gray-500);}
+.cta-check-icon{color:var(--blue-600);}
+
+/* CONNECT WITH US */
+#connect{background:#fff;}
+.contact-wrap{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;align-items:start;}
+.contact-item{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px;}
+.contact-icon{width:42px;height:42px;border-radius:11px;background:var(--blue-50);border:1px solid var(--blue-100);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
+.contact-label{font-size:11px;font-weight:700;color:var(--gray-400);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;}
+.contact-val{font-size:14px;font-weight:600;color:var(--gray-700);}
+.form-box{background:#fff;border-radius:var(--rxl);border:1px solid var(--gray-200);padding:36px;box-shadow:var(--sh-md);}
+.form-box-title{font-size:20px;font-weight:800;color:var(--gray-900);margin-bottom:4px;}
+.form-box-sub{font-size:13px;color:var(--gray-400);margin-bottom:26px;}
+.fg{margin-bottom:16px;}
+.fg label{display:block;font-size:12px;font-weight:700;color:var(--gray-600);margin-bottom:5px;}
+.fg input,.fg select,.fg textarea{width:100%;padding:11px 14px;border:1.5px solid var(--gray-200);border-radius:9px;font-size:14px;font-family:var(--font);color:var(--gray-800);outline:none;transition:all .2s;background:#fff;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue-400);box-shadow:0 0 0 3px rgba(55,138,221,0.1);}
+.fg textarea{resize:vertical;min-height:88px;}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.submit-btn{width:100%;padding:14px;background:var(--blue-600);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .2s;margin-top:4px;}
+.submit-btn:hover{background:var(--blue-800);transform:translateY(-1px);box-shadow:var(--sh-md);}
+
+/* FOOTER */
+footer{background:var(--gray-900);color:rgba(255,255,255,0.5);padding:60px 6% 28px;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px;}
+.footer-brand-desc{font-size:13px;line-height:1.7;color:rgba(255,255,255,0.4);margin-top:14px;max-width:220px;}
+.footer-social{display:flex;gap:10px;margin-top:18px;}
+.social-btn{width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all .2s;}
+.social-btn:hover{background:var(--blue-600);border-color:var(--blue-600);}
+.footer-h{color:#fff;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:16px;}
+.footer-links{display:flex;flex-direction:column;gap:10px;}
+.footer-links a{font-size:13px;color:rgba(255,255,255,0.45);transition:color .2s;cursor:pointer;}
+.footer-links a:hover{color:#fff;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+.footer-bottom-links{display:flex;gap:20px;}
+.footer-bottom-links a{color:rgba(255,255,255,0.35);cursor:pointer;}
+.footer-bottom-links a:hover{color:#fff;}
+
+/* MODAL */
+.overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(10,30,60,0.6);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px;}
+.overlay.open{display:flex;}
+.modal{background:#fff;border-radius:22px;width:100%;max-width:440px;padding:36px;position:relative;animation:mIn .25s ease;}
+@keyframes mIn{from{opacity:0;transform:scale(.94) translateY(12px);}to{opacity:1;transform:none;}}
+.modal-x{position:absolute;top:14px;right:14px;width:30px;height:30px;border-radius:8px;border:1px solid var(--gray-200);background:transparent;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--gray-400);transition:all .2s;}
+.modal-x:hover{background:var(--gray-100);}
+.modal-tabs{display:flex;background:var(--gray-100);border-radius:10px;padding:4px;gap:4px;margin-bottom:24px;}
+.modal-tab{flex:1;padding:9px;text-align:center;border-radius:7px;font-size:13px;font-weight:700;cursor:pointer;color:var(--gray-500);border:none;background:transparent;font-family:var(--font);}
+.modal-tab.on{background:#fff;color:var(--blue-600);box-shadow:var(--sh-sm);}
+.mf{display:none;}.mf.on{display:block;}
+.mh{font-size:21px;font-weight:800;color:var(--gray-900);margin-bottom:3px;}
+.ms{font-size:13px;color:var(--gray-400);margin-bottom:22px;}
+.mswitch{text-align:center;font-size:12px;color:var(--gray-400);margin-top:16px;}
+.mswitch a{color:var(--blue-600);font-weight:700;cursor:pointer;}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--gray-900);color:#fff;padding:12px 24px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;box-shadow:var(--sh-lg);}
+.toast.on{opacity:1;}
+
+@media(max-width:1024px){.hero-brand-card{display:none;}.steps{grid-template-columns:1fr;}.features-grid{grid-template-columns:1fr 1fr;}.footer-top{grid-template-columns:1fr 1fr;}.workshop-card-large{grid-template-columns:1fr;}.workshop-list{grid-template-columns:1fr;}}
+@media(max-width:768px){.hero-stats{grid-template-columns:1fr 1fr;gap:20px;}.testi-grid{grid-template-columns:1fr;}.contact-wrap{grid-template-columns:1fr;}.nav-links{display:none;}}
+@media(max-width:600px){.features-grid{grid-template-columns:1fr;}.instructors-grid{grid-template-columns:1fr;}.fg-row{grid-template-columns:1fr;}.footer-top{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">
+    <div class="logo-icon">
+      <!-- Replace YOUR_LOGO_URL with your actual logo image path/URL -->
+      <img src="C:\Users\prana\Downloads\logoSU.jpeg" alt="SparkUp Logo"/>
+    </div>
+    <div>
+      <div class="logo-text">Spark<span>Up</span></div>
+      <div class="logo-sub">Learn · Build · Achieve</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#home">HOME</a>
+    <a href="#about">ABOUT</a>
+    <a href="#courses">COURSES</a>
+    <a href="#workshop">WORKSHOP</a>
+    <a href="#connect">CONNECT WITH US</a>
+  </div>
+
+  <div class="nav-end">
+    <button class="btn btn-ghost" onclick="openModal('signin')">Login</button>
+    <button class="btn btn-primary" onclick="openModal('register')">Get Started</button>
+  </div>
+</nav>
+
+<!-- HERO / HOME -->
+<section class="hero" id="home">
+  <div class="hero-dots"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-pill"><span class="hero-pill-dot"></span> Bridge the College to Corporate Gap</div>
+  <div class="hero-tags">
+    <span class="hero-tag">Tech Courses</span>
+    <span class="hero-tag">Network Building</span>
+    <span class="hero-tag">LinkedIn Optimization</span>
+    <span class="hero-tag">Latest AI Tools</span>
+  </div>
+  <h1>Bridge College to Corporate<br/><span class="hl">Master Modern Tech</span> & AI</h1>
+  
+  <!-- 3 to 4 Lines Description -->
+  <p class="hero-desc">
+    SparkUp is built to bridge the gap between college education and corporate readiness. 
+    We empower students with hands-on tech courses, modern AI skillsets, professional network building, 
+    and LinkedIn optimization to ensure you stay ahead and job-ready in an AI-driven world.
+  </p>
+  
+  <!-- LEARN BUILD GROW -->
+  <div class="hero-lbg">LEARN • BUILD • GROW</div>
+
+  <div class="hero-features">
+    <div class="hero-feat"><div class="hero-feat-check">✓</div> Live Interactive Classes</div>
+    <div class="hero-feat"><div class="hero-feat-check">✓</div> Hands-on Tech Projects</div>
+    <div class="hero-feat"><div class="hero-feat-check">✓</div> LinkedIn & Resume Optimization</div>
+    <div class="hero-feat"><div class="hero-feat-check">✓</div> AI Integration & Workflows</div>
+    <div class="hero-feat"><div class="hero-feat-check">✓</div> Corporate Mentorship</div>
+  </div>
+  <div class="hero-cta">
+    <button class="btn-white" onclick="document.getElementById('courses').scrollIntoView({behavior:'smooth'})">Browse Courses</button>
+    <button class="btn-outline-w" onclick="openModal('register')">Start Free Preview</button>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-val">3K+</div><div class="hero-stat-lbl">Students<br/>Trained</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">10+</div><div class="hero-stat-lbl">Placed in<br/>Top MNCs</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">95%</div><div class="hero-stat-lbl">Completion<br/>Rate</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">4.8★</div><div class="hero-stat-lbl">Average<br/>Rating</div></div>
+  </div>
+
+  <!-- RIGHT SIDE BRAND CARD (Replaces Code Terminal) -->
+  <div class="hero-brand-card">
+    <div class="hero-logo-box">
+      <!-- Replace YOUR_LOGO_URL with your actual logo image path/URL -->
+      <img src="C:\Users\prana\Downloads\logoSU.jpeg" alt="SparkUp Logo"/>
+    </div>
+    <div class="hero-card-title">SparkUp</div>
+    <div class="hero-card-sub">COLLEGE TO CORPORATE</div>
+    <div class="hero-card-list">
+      <div class="hero-card-item"><span>✓</span> Industry Tech Skills</div>
+      <div class="hero-card-item"><span>✓</span> AI-Powered Learning</div>
+      <div class="hero-card-item"><span>✓</span> LinkedIn Profile Optimization</div>
+      <div class="hero-card-item"><span>✓</span> Professional Networking</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-chip">About Us & How It Works</div>
+  <h2>From Zero to Hired<br/>in 3 Simple Steps</h2>
+  <p class="sec-sub">A proven journey that has helped 3,000+ students completely transform their tech careers.</p>
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">STEP 01</div>
+      <div class="step-icon">🎯</div>
+      <div class="step-title">Browse & Enroll</div>
+      <div class="step-desc">Pick from our curated catalog of DevOps, Cloud, and Programming courses. Enroll in minutes via UPI, card, or net banking. Zero hidden fees.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">STEP 02</div>
+      <div class="step-icon">💻</div>
+      <div class="step-title">Learn Live + Recordings</div>
+      <div class="step-desc">Attend live interactive sessions with real-time Q&A. Can't make it? Watch HD recordings at your own pace. Build real projects and get expert feedback.</div>
+    </div>
+    <div class="step-card">
+      <div class="step-num">STEP 03</div>
+      <div class="step-icon">🏆</div>
+      <div class="step-title">Get Certified & Placed</div>
+      <div class="step-desc">Earn a verified certificate, polish your resume with our experts, and land your dream job with direct referrals from our hiring network.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COURSES -->
+<section id="courses">
+  <div class="sec-chip">Our Courses</div>
+  <h2>Programs Built for<br/>Real-World Careers</h2>
+  <p class="sec-sub">Every course is designed with industry hiring managers. Ship deployable projects and master tools used at top companies.</p>
+  <div class="courses-filters">
+    <button class="filter-btn active" onclick="filterCourse(this,'all')">All Courses</button>
+    <button class="filter-btn" onclick="filterCourse(this,'devops')">DevOps</button>
+    <button class="filter-btn" onclick="filterCourse(this,'cloud')">Cloud</button>
+    <button class="filter-btn" onclick="filterCourse(this,'programming')">Programming</button>
+    <button class="filter-btn" onclick="filterCourse(this,'web')">Web & AI</button>
+    <button class="filter-btn" onclick="filterCourse(this,'career')">Career Skills</button>
+    <button class="filter-btn" onclick="filterCourse(this,'free')">Free</button>
+  </div>
+  <div class="courses-grid" id="courseGrid">
+    <div class="course-card" data-cat="devops">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#EFF6FF,#BFDBFE);">🐳<div class="course-live-badge"><div class="live-dot"></div>LIVE</div></div>
+      <div class="course-body">
+        <span class="level-badge l-int">Intermediate</span>
+        <div class="course-title">DevOps Engineering Masterclass</div>
+        <div class="course-desc">Docker, Kubernetes, Jenkins CI/CD, Terraform, Ansible & more. From zero to production-grade pipelines.</div>
+        <div class="course-tags"><span class="course-tag">Docker</span><span class="course-tag">Kubernetes</span><span class="course-tag">Jenkins</span><span class="course-tag">Terraform</span></div>
+        <div class="course-meta"><span>⏱ 20 weeks</span><span>📹 160 lessons</span><span>👥 1,200+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹14,999</span><span class="course-old">₹24,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="cloud">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#FFF7ED,#FED7AA);">☁️<div class="course-live-badge"><div class="live-dot"></div>LIVE</div></div>
+      <div class="course-body">
+        <span class="level-badge l-beg">Beginner</span>
+        <div class="course-title">AWS Cloud — Practitioner to Architect</div>
+        <div class="course-desc">EC2, S3, RDS, Lambda, VPC, CloudFormation and certification prep. Get AWS certified and job-ready.</div>
+        <div class="course-tags"><span class="course-tag">AWS</span><span class="course-tag">EC2</span><span class="course-tag">Lambda</span><span class="course-tag">S3</span></div>
+        <div class="course-meta"><span>⏱ 16 weeks</span><span>📹 130 lessons</span><span>👥 900+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹12,999</span><span class="course-old">₹19,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="programming">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#F0FDF4,#BBF7D0);">🐍<div class="course-live-badge"><div class="live-dot"></div>LIVE</div></div>
+      <div class="course-body">
+        <span class="level-badge l-beg">Beginner</span>
+        <div class="course-title">Python for Automation & Scripting</div>
+        <div class="course-desc">Core Python, automation scripts, file handling, APIs, and real DevOps automation projects from scratch.</div>
+        <div class="course-tags"><span class="course-tag">Python</span><span class="course-tag">Automation</span><span class="course-tag">APIs</span><span class="course-tag">Scripting</span></div>
+        <div class="course-meta"><span>⏱ 12 weeks</span><span>📹 100 lessons</span><span>👥 1,500+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹9,999</span><span class="course-old">₹15,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="devops cloud">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#FAF5FF,#E9D5FF);">🔧</div>
+      <div class="course-body">
+        <span class="level-badge l-adv">Advanced</span>
+        <div class="course-title">SRE — Site Reliability Engineering</div>
+        <div class="course-desc">Observability, incident management, SLOs, Prometheus, Grafana, and reliability engineering at scale.</div>
+        <div class="course-tags"><span class="course-tag">SRE</span><span class="course-tag">Prometheus</span><span class="course-tag">Grafana</span><span class="course-tag">Observability</span></div>
+        <div class="course-meta"><span>⏱ 14 weeks</span><span>📹 110 lessons</span><span>👥 600+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹16,999</span><span class="course-old">₹27,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="programming">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#ECFEFF,#A5F3FC);">🤖</div>
+      <div class="course-body">
+        <span class="level-badge l-adv">Advanced</span>
+        <div class="course-title">MLOps — Deploying ML to Production</div>
+        <div class="course-desc">ML pipelines, model serving, Kubeflow, MLflow, monitoring, and end-to-end production ML systems.</div>
+        <div class="course-tags"><span class="course-tag">MLOps</span><span class="course-tag">Kubeflow</span><span class="course-tag">MLflow</span><span class="course-tag">Python</span></div>
+        <div class="course-meta"><span>⏱ 18 weeks</span><span>📹 140 lessons</span><span>👥 400+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹18,999</span><span class="course-old">₹29,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="free programming">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#FFF1F2,#FECDD3);">🚀</div>
+      <div class="course-body">
+        <span class="level-badge l-beg">Beginner</span>
+        <div class="course-title">Linux & Shell Scripting Bootcamp</div>
+        <div class="course-desc">Linux fundamentals, Bash scripting, file system, networking basics, and DevOps prerequisites. Free to start.</div>
+        <div class="course-tags"><span class="course-tag">Linux</span><span class="course-tag">Bash</span><span class="course-tag">Shell</span><span class="course-tag">Networking</span></div>
+        <div class="course-meta"><span>⏱ 6 weeks</span><span>📹 50 lessons</span><span>👥 2,000+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price course-price-free">Free</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Free</button></div>
+    </div>
+    <div class="course-card" data-cat="programming">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#EFF6FF,#DBEAFE);">🧠</div>
+      <div class="course-body">
+        <span class="level-badge l-beg">Beginner</span>
+        <div class="course-title">Python Programming Foundations</div>
+        <div class="course-desc">Learn Python syntax, data structures, functions, OOP, testing, and practical projects for automation and software development.</div>
+        <div class="course-tags"><span class="course-tag">Python</span><span class="course-tag">OOP</span><span class="course-tag">Projects</span><span class="course-tag">Testing</span></div>
+        <div class="course-meta"><span>⏱ 10 weeks</span><span>📹 80 lessons</span><span>👥 1,800+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹8,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="devops">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#FFF7ED,#FFEDD5);">⚙️</div>
+      <div class="course-body">
+        <span class="level-badge l-adv">Advanced</span>
+        <div class="course-title">Advanced DevOps & Platform Engineering</div>
+        <div class="course-desc">Design secure production platforms with Kubernetes, GitOps, Terraform, observability, SRE practices, and progressive delivery.</div>
+        <div class="course-tags"><span class="course-tag">Kubernetes</span><span class="course-tag">GitOps</span><span class="course-tag">Terraform</span><span class="course-tag">SRE</span></div>
+        <div class="course-meta"><span>⏱ 14 weeks</span><span>📹 112 lessons</span><span>👥 750+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹17,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="cloud">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#ECFEFF,#CFFAFE);">🌐</div>
+      <div class="course-body">
+        <span class="level-badge l-int">Intermediate</span>
+        <div class="course-title">Cloud Computing & Architecture</div>
+        <div class="course-desc">Understand cloud fundamentals, networking, containers, serverless systems, security, cost management, and multi-cloud design.</div>
+        <div class="course-tags"><span class="course-tag">AWS</span><span class="course-tag">Azure</span><span class="course-tag">Networking</span><span class="course-tag">Security</span></div>
+        <div class="course-meta"><span>⏱ 12 weeks</span><span>📹 96 lessons</span><span>👥 1,100+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹13,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="programming">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#F0FDF4,#DCFCE7);">🔗</div>
+      <div class="course-body">
+        <span class="level-badge l-beg">Beginner</span>
+        <div class="course-title">Git & GitHub for Developers</div>
+        <div class="course-desc">Master version control, branching, pull requests, code reviews, GitHub Actions, and collaborative development workflows.</div>
+        <div class="course-tags"><span class="course-tag">Git</span><span class="course-tag">GitHub</span><span class="course-tag">Actions</span><span class="course-tag">Collaboration</span></div>
+        <div class="course-meta"><span>⏱ 4 weeks</span><span>📹 36 lessons</span><span>👥 1,400+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹4,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="programming">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#FEFCE8,#FEF08A);">🗄️</div>
+      <div class="course-body">
+        <span class="level-badge l-beg">Beginner</span>
+        <div class="course-title">SQL & Database Development</div>
+        <div class="course-desc">Write powerful SQL queries, design relational databases, optimize performance, and work with real business datasets.</div>
+        <div class="course-tags"><span class="course-tag">SQL</span><span class="course-tag">PostgreSQL</span><span class="course-tag">Joins</span><span class="course-tag">Analytics</span></div>
+        <div class="course-meta"><span>⏱ 6 weeks</span><span>📹 52 lessons</span><span>👥 980+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹6,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="web">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#FFF1F2,#FFE4E6);">💻</div>
+      <div class="course-body">
+        <span class="level-badge l-int">Intermediate</span>
+        <div class="course-title">Modern Web Technologies</div>
+        <div class="course-desc">Build responsive web experiences with HTML, CSS, JavaScript, APIs, React fundamentals, accessibility, and deployment.</div>
+        <div class="course-tags"><span class="course-tag">HTML/CSS</span><span class="course-tag">JavaScript</span><span class="course-tag">React</span><span class="course-tag">APIs</span></div>
+        <div class="course-meta"><span>⏱ 12 weeks</span><span>📹 100 lessons</span><span>👥 1,300+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹10,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="web">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#F5F3FF,#EDE9FE);">✨</div>
+      <div class="course-body">
+        <span class="level-badge l-int">Intermediate</span>
+        <div class="course-title">Build with AI</div>
+        <div class="course-desc">Use AI tools to research, code, automate workflows, create prototypes, and ship useful products responsibly and efficiently.</div>
+        <div class="course-tags"><span class="course-tag">Prompting</span><span class="course-tag">AI Tools</span><span class="course-tag">Automation</span><span class="course-tag">Prototyping</span></div>
+        <div class="course-meta"><span>⏱ 6 weeks</span><span>📹 48 lessons</span><span>👥 1,600+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹7,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+    <div class="course-card" data-cat="career">
+      <div class="course-thumb" style="background:linear-gradient(135deg,#F0FDFA,#CCFBF1);">🌱</div>
+      <div class="course-body">
+        <span class="level-badge l-beg">All Levels</span>
+        <div class="course-title">Professional Soft Skills</div>
+        <div class="course-desc">Build communication, teamwork, time management, presentation, workplace confidence, and professional problem-solving skills.</div>
+        <div class="course-tags"><span class="course-tag">Communication</span><span class="course-tag">Teamwork</span><span class="course-tag">Leadership</span><span class="course-tag">Confidence</span></div>
+        <div class="course-meta"><span>⏱ 4 weeks</span><span>📹 32 lessons</span><span>👥 1,700+</span></div>
+      </div>
+      <div class="course-footer"><div><span class="course-price">₹3,999</span></div><button class="enroll-btn" onclick="openModal('register')">Enroll Now</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKSHOP -->
+<section id="workshop">
+  <div class="sec-chip">Upcoming Workshop</div>
+  <h2>Live Hands-On<br/>Interactive Bootcamp</h2>
+  <p class="sec-sub">Join our intensive weekend workshops to get deep hands-on expertise on cutting-edge industry tools.</p>
+  
+  <div class="workshop-list">
+  <div class="workshop-card-large">
+    <div class="workshop-info">
+      <h3>Python Programming Sprint</h3>
+      <p>A practical two-day workshop to build a Python automation project and strengthen your programming fundamentals.</p>
+      <div class="workshop-details">
+        <div class="ws-item">📅 <strong>Date:</strong> September 26–27, 2026</div>
+        <div class="ws-item">⏰ <strong>Time:</strong> 10:00 AM – 2:00 PM IST</div>
+        <div class="ws-item">📍 <strong>Location:</strong> Live Online (Zoom + Interactive Lab)</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="openModal('register')">Reserve Your Seat</button>
+    </div>
+    <div style="background: linear-gradient(135deg, var(--blue-900), var(--blue-700)); padding: 32px; border-radius: var(--rl); color: #fff; text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 12px;">⚡</div>
+      <h4 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Limited Seats Available</h4>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Get certificate of completion and project source files included.</p>
+      <div style="font-size: 28px; font-weight: 800; font-family: var(--mono); color: #4ADE80;">₹499 <span style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:line-through;">₹1,999</span></div>
+    </div>
+  </div>
+  <div class="workshop-card-large">
+    <div class="workshop-info">
+      <h3>Build with AI Workshop</h3>
+      <p>Turn an idea into a working AI-powered prototype using modern tools, prompts, APIs, and responsible AI workflows.</p>
+      <div class="workshop-details">
+        <div class="ws-item">📅 <strong>Date:</strong> September 26–27, 2026</div>
+        <div class="ws-item">⏰ <strong>Time:</strong> 3:00 PM – 7:00 PM IST</div>
+        <div class="ws-item">📍 <strong>Location:</strong> Live Online (Zoom + Interactive Lab)</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="openModal('register')">Reserve Your Seat</button>
+    </div>
+    <div style="background: linear-gradient(135deg, var(--blue-900), var(--blue-700)); padding: 32px; border-radius: var(--rl); color: #fff; text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 12px;">✨</div>
+      <h4 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Build Your First AI Project</h4>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Certificate, templates, and project resources included.</p>
+      <div style="font-size: 28px; font-weight: 800; font-family: var(--mono); color: #4ADE80;">₹399 <span style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:line-through;">₹1,499</span></div>
+    </div>  
+  </div>
+  <div class="workshop-card-large">
+    <div class="workshop-info">
+      <h3>Interviewing for Sucess</h3>
+      <p>Practice technical and HR interviews, improve your answers, and learn a repeatable method for presenting your projects with confidence.</p>
+      <div class="workshop-details">
+        <div class="ws-item">📅 <strong>Date:</strong> October 3–4, 2026</div>
+        <div class="ws-item">⏰ <strong>Time:</strong> 10:00 AM – 2:00 PM IST</div>
+        <div class="ws-item">📍 <strong>Location:</strong> Live Online (Zoom + Practice Rooms)</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="openModal('register')">Reserve Your Seat</button>
+    </div>
+    <div style="background: linear-gradient(135deg, var(--blue-900), var(--blue-700)); padding: 32px; border-radius: var(--rl); color: #fff; text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 12px;">🎤</div>
+      <h4 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Practice. Improve. Succeed.</h4>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Mock interview feedback and answer frameworks included.</p>
+      <div style="font-size: 28px; font-weight: 800; font-family: var(--mono); color: #4ADE80;">₹299 <span style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:line-through;">₹999</span></div>
+    </div>
+  </div>
+  <div class="workshop-card-large">
+    <div class="workshop-info">
+      <h3>Effective Resume Writing</h3>
+      <p>Create a clear, achievement-focused resume that highlights your skills, projects, and experience for the roles you want.</p>
+      <div class="workshop-details">
+        <div class="ws-item">📅 <strong>Date:</strong> October 3–4, 2026</div>
+        <div class="ws-item">⏰ <strong>Time:</strong> 3:00 PM – 5:00 PM IST</div>
+        <div class="ws-item">📍 <strong>Location:</strong> Live Online (Zoom + Career Clinic)</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="openModal('register')">Reserve Your Seat</button>
+    </div>
+    <div style="background: linear-gradient(135deg, var(--blue-900), var(--blue-700)); padding: 32px; border-radius: var(--rl); color: #fff; text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 12px;">📝</div>
+      <h4 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Build a Strong Resume</h4>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Resume templates, examples, and expert review included.</p>
+      <div style="font-size: 28px; font-weight: 800; font-family: var(--mono); color: #4ADE80;">₹299 <span style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:line-through;">₹999</span></div>
+    </div>
+  </div>
+  <div class="workshop-card-large">
+    <div class="workshop-info">
+      <h3>LinkedIn Profile Optimization</h3>
+      <p>Turn your LinkedIn profile into a professional portfolio that attracts recruiters, mentors, and meaningful opportunities.</p>
+      <div class="workshop-details">
+        <div class="ws-item">📅 <strong>Date:</strong> October 10–11, 2026</div>
+        <div class="ws-item">⏰ <strong>Time:</strong> 10:00 AM – 12:00 PM IST</div>
+        <div class="ws-item">📍 <strong>Location:</strong> Live Online (Zoom + Profile Clinic)</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="openModal('register')">Reserve Your Seat</button>
+    </div>
+    <div style="background: linear-gradient(135deg, var(--blue-900), var(--blue-700)); padding: 32px; border-radius: var(--rl); color: #fff; text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 12px;">🔗</div>
+      <h4 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Get Noticed Online</h4>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Headline, About section, profile checklist, and content ideas included.</p>
+      <div style="font-size: 28px; font-weight: 800; font-family: var(--mono); color: #4ADE80;">₹299 <span style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:line-through;">₹999</span></div>
+    </div>
+  </div>
+  <div class="workshop-card-large">
+    <div class="workshop-info">
+      <h3>Elevator Pitch Workshop</h3>
+      <p>Build and confidently deliver a concise personal introduction for interviews, networking events, and professional conversations.</p>
+      <div class="workshop-details">
+        <div class="ws-item">📅 <strong>Date:</strong> October 10–11, 2026</div>
+        <div class="ws-item">⏰ <strong>Time:</strong> 3:00 PM – 5:00 PM IST</div>
+        <div class="ws-item">📍 <strong>Location:</strong> Live Online (Zoom + Practice Room)</div>
+      </div>
+      <button class="btn btn-primary btn-lg" onclick="openModal('register')">Reserve Your Seat</button>
+    </div>
+    <div style="background: linear-gradient(135deg, var(--blue-900), var(--blue-700)); padding: 32px; border-radius: var(--rl); color: #fff; text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 12px;">🎙️</div>
+      <h4 style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Introduce Yourself with Confidence</h4>
+      <p style="font-size: 13px; color: rgba(255,255,255,0.7); margin-bottom: 20px;">Personal pitch framework, practice prompts, and feedback included.</p>
+      <div style="font-size: 28px; font-weight: 800; font-family: var(--mono); color: #4ADE80;">₹299 <span style="font-size:14px; color:rgba(255,255,255,0.5); text-decoration:line-through;">₹999</span></div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- INSTRUCTORS -->
+<section id="instructors">
+  <div class="sec-chip">Meet Your Instructors</div>
+  <h2>Learn from Industry<br/>Practitioners</h2>
+  <p class="sec-sub">Working professionals who bring real production war stories, not just theory, to every class.</p>
+  <div class="instructors-grid">
+    <div class="instructor-card">
+      <div class="instructor-avatar" style="background:linear-gradient(135deg,#185FA5,#378ADD);">DP</div>
+      <div class="instructor-name">MaddikeraPoojitha</div>
+      <div class="instructor-role">SDE & DevOps Engineer</div>
+      <div class="instructor-bio">Software Engineer with expertise in Full Stack Development, Cloud, DevOps, and AI, passionate about building scalable real-world solutions and helping students become career-ready.</div>
+      <div class="instructor-skills"><span class="iskill">SRE</span><span class="iskill">Kubernetes</span><span class="iskill">Platform Eng</span><span class="iskill">DevOps</span><span class="iskill">Observability</span></div>
+      <div class="instructor-stats">
+        <div class="istat"><div class="istat-val">800+</div><div class="istat-lbl">Students</div></div>
+        <div class="istat"><div class="istat-val">5+</div><div class="istat-lbl">Courses</div></div>
+        
+      </div>
+    </div>
+    
+    
+    
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="sec-chip">Why Choose SparkUp</div>
+  <h2>Everything You Need<br/>to Succeed</h2>
+  <p class="sec-sub">Not just another course platform. We provide the full ecosystem — from learning to landing your dream job.</p>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon-wrap">🎙️</div><div class="feature-title">Live Interactive Classes</div><div class="feature-desc">Join scheduled live sessions with real-time Q&A, screen sharing, and direct interaction with instructors. Never learn passively again.</div></div>
+    <div class="feature-card"><div class="feature-icon-wrap">📹</div><div class="feature-title">HD Lifetime Recordings</div><div class="feature-desc">Watch all class recordings anytime in HD quality with speed controls (0.5x–2x), chapter bookmarks, and searchable transcripts.</div></div>
+    <div class="feature-card"><div class="feature-icon-wrap">🛠️</div><div class="feature-title">Hands-on Projects</div><div class="feature-desc">Build real-world projects you can showcase in your portfolio and walk through confidently in any technical interview.</div></div>
+    <div class="feature-card"><div class="feature-icon-wrap">🏅</div><div class="feature-title">Verified Certificates</div><div class="feature-desc">Earn industry-recognized certificates with unique verification URLs. Share directly on LinkedIn with one click.</div></div>
+    <div class="feature-card"><div class="feature-icon-wrap">👥</div><div class="feature-title">Active Community</div><div class="feature-desc">Join our Telegram community with 3,000+ peers, alumni, and industry mentors. Network, collaborate, and grow together.</div></div>
+    <div class="feature-card"><div class="feature-icon-wrap">💼</div><div class="feature-title">Placement Support</div><div class="feature-desc">Resume reviews, mock interviews, and direct referrals to our 200+ hiring partners. We don't stop until you're placed.</div></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="sec-chip" style="background:rgba(255,255,255,0.1);color:#93C5FD;border-color:rgba(255,255,255,0.15);">Success Stories</div>
+  <h2 style="color:#fff;">3,000+ Lives Changed.<br/>Yours Could Be Next.</h2>
+  <p class="sec-sub" style="color:rgba(255,255,255,0.6);">Real students. Real companies. Real salaries.</p>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"SparkUp's DevOps course was the real deal — live classes with actual production scenarios, not textbook examples. Got placed at Amazon 3 weeks after completing the course."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#185FA5,#378ADD);">RK</div>
+        <div><div class="testi-name">Rahul Kumar</div><div class="testi-detail">DevOps Engineer</div><div class="testi-company">@ Amazon · ₹22 LPA</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"The AWS course took me from zero cloud knowledge to a Solutions Architect role in 4 months. Instructors respond on Telegram even at midnight. Unmatched support!"</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#0F6E56,#1D9E75);">PS</div>
+        <div><div class="testi-name">Priya Sharma</div><div class="testi-detail">Cloud Solutions Architect</div><div class="testi-company">@ Infosys · ₹18 LPA</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"I had zero programming background. SparkUp's Python course made everything click. The hands-on projects gave me the confidence to crack interviews at top product companies."</div>
+      <div class="testi-author">
+        <div class="testi-avatar" style="background:linear-gradient(135deg,#854F0B,#EF9F27);">AM</div>
+        <div><div class="testi-name">Arjun Mehta</div><div class="testi-detail">Python Automation Engineer</div><div class="testi-company">@ Airbnb · ₹26 LPA</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <div class="sec-chip">Ready to Start?</div>
+    <h2>Ready to 10x<br/>Your Career?</h2>
+    <p class="sec-sub">Join 3,000+ students already learning with us. Start today and land your dream job at top tech companies.</p>
+    <div class="cta-btns">
+      <button class="btn btn-primary btn-lg" onclick="openModal('register')">Get Started Free</button>
+      <a href="https://wa.me/917989480843" target="_blank" class="btn btn-ghost btn-lg" style="border-radius:11px;">💬 Chat on WhatsApp</a>
+    </div>
+    <div class="cta-checks">
+      <div class="cta-check"><span class="cta-check-icon">✓</span> No credit card required</div>
+      <div class="cta-check"><span class="cta-check-icon">✓</span> 30-day money back</div>
+      <div class="cta-check"><span class="cta-check-icon">✓</span> Lifetime access</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT WITH US -->
+<section id="connect">
+  <div class="contact-wrap">
+    <div>
+      <div class="sec-chip">Connect With Us</div>
+      <h2>Have Questions?<br/>Let's Talk.</h2>
+      <p class="sec-sub">Our team typically responds within a few hours. Or chat with us on WhatsApp for instant help.</p>
+      <div style="margin-top:32px;">
+        <div class="contact-item"><div class="contact-icon">📧</div><div><div class="contact-label">Email Us</div><div class="contact-val">hr.team.sparkup@gmail.com</div></div></div>
+        <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-label">Call Us</div><div class="contact-val">+91 7989480843</div></div></div>
+        <div class="contact-item"><div class="contact-icon">💬</div><div><div class="contact-label">WhatsApp</div><div class="contact-val">+91 7989480843</div></div></div>
+
+        <div class="contact-item"><div class="contact-icon">⏰</div><div><div class="contact-label">Hours</div><div class="contact-val">Sat & Sun, 9 AM – 7 PM IST</div></div></div>
+      </div>
+    </div>
+    <div class="form-box">
+      <div class="form-box-title">Send an Enquiry</div>
+      <div class="form-box-sub">We'll match you to the perfect course and answer all your questions.</div>
+      <div class="fg-row">
+        <div class="fg"><label>First Name</label><input type="text" placeholder="Arjun" id="cf-fn"/></div>
+        <div class="fg"><label>Last Name</label><input type="text" placeholder="Sharma"/></div>
+      </div>
+      <div class="fg"><label>Email Address</label><input type="email" placeholder="arjun@email.com" id="cf-em"/></div>
+      <div class="fg"><label>Phone Number</label><input type="tel" placeholder="+91 98765 43210"/></div>
+      <div class="fg"><label>Course of Interest</label>
+        <select>
+          <option>Select a course…</option>
+          <option>DevOps Engineering Masterclass</option>
+          <option>AWS Cloud — Practitioner to Architect</option>
+          <option>Python for Automation & Scripting</option>
+          <option>SRE — Site Reliability Engineering</option>
+          <option>MLOps — Deploying ML to Production</option>
+          <option>Linux & Shell Scripting Bootcamp</option>
+          <option>Python Programming Foundations</option>
+          <option>Advanced DevOps & Platform Engineering</option>
+          <option>Cloud Computing & Architecture</option>
+          <option>Git & GitHub for Developers</option>
+          <option>SQL & Database Development</option>
+          <option>Modern Web Technologies</option>
+          <option>Build with AI</option>
+          <option>Professional Soft Skills</option>
+        </select>
+      </div>
+      <div class="fg"><label>Message (optional)</label><textarea placeholder="Tell us about your background and career goals…"></textarea></div>
+      <button class="submit-btn" onclick="handleContact()">Send Enquiry →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="logo">
+        <div class="logo-icon" style="width:32px;height:32px;">
+          <!-- Replace YOUR_LOGO_URL with your actual logo image path/URL -->
+          <img src="C:\Users\prana\Downloads\logoSU.jpeg" alt="SparkUp Logo"/>
+        </div>
+        <div>
+          <div style="font-size:17px;font-weight:800;color:#fff;">Spark<span style="color:#60A5FA;">Up</span></div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.35);letter-spacing:1px;">Learn · Build · Achieve</div>
+        </div>
+      </div>
+      <div class="footer-brand-desc">Master DevOps, Cloud, and Programming with industry experts. Join 3,000+ students who have transformed their careers.</div>
+      <div class="footer-social">
+        <div class="social-btn">in</div><div class="social-btn">𝕏</div><div class="social-btn">▶</div><div class="social-btn">✉</div>
+      </div>
+    </div>
+    <div>
+      <div class="footer-h">Platform</div>
+      <div class="footer-links"><a href="#courses">All Courses</a><a href="#instructors">Instructors</a><a>Success Stories</a><a>How to Pay</a><a>Blog</a></div>
+    </div>
+    <div>
+      <div class="footer-h">Company</div>
+      <div class="footer-links"><a href="#about">About Us</a><a href="#connect">Contact</a><a>Careers</a><a>Press</a></div>
+    </div>
+    <div>
+      <div class="footer-h">Legal</div>
+      <div class="footer-links"><a>Privacy Policy</a><a>Terms of Service</a><a>Refund Policy</a><a>Cookie Policy</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SparkUp Institute Pvt. Ltd. All rights reserved.</span>
+    <div class="footer-bottom-links"><a>Privacy</a><a>Terms</a><a>Refund</a></div>
+    <span>Made with ❤️ in Bengaluru</span>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="authOverlay" onclick="handleOvClick(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">✕</button>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+      <div class="logo-icon" style="width:30px;height:30px;">
+        <img src="C:\Users\prana\Downloads\logoSU.jpeg" alt="SparkUp Logo"/>
+      </div>
+      <div style="font-size:16px;font-weight:800;color:var(--gray-900);">Spark<span style="color:var(--blue-600);">Up</span></div>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab on" id="tab-reg" onclick="switchTab('register')">Register</button>
+      <button class="modal-tab" id="tab-sin" onclick="switchTab('signin')">Login</button>
+    </div>
+    <div class="mf on" id="mf-register">
+      <div class="mh">Create your account</div>
+      <div class="ms">Join 3,000+ learners building real careers.</div>
+      <div class="fg-row">
+        <div class="fg" style="margin-bottom:14px;"><label>First Name</label><input type="text" placeholder="Arjun" id="r-fn"/></div>
+        <div class="fg" style="margin-bottom:14px;"><label>Last Name</label><input type="text" placeholder="Sharma"/></div>
+      </div>
+      <div class="fg"><label>Email</label><input type="email" placeholder="you@email.com" id="r-em"/></div>
+      <div class="fg"><label>Password</label><input type="password" placeholder="Min. 8 characters" id="r-pw"/></div>
+      <div class="fg"><label>Course Interest</label>
+        <select><option>Select a course…</option><option>DevOps Engineering Masterclass</option><option>AWS Cloud Solutions Architect</option><option>Python for Automation</option><option>SRE Engineering</option><option>MLOps</option><option>Linux & Shell Scripting (Free)</option></select>
+      </div>
+      <button class="submit-btn" onclick="handleRegister()">Create Account →</button>
+      <div class="mswitch">Already have an account? <a onclick="switchTab('signin')">Login here</a></div>
+    </div>
+    <div class="mf" id="mf-signin">
+      <div class="mh">Welcome back!</div>
+      <div class="ms">Continue your learning journey.</div>
+      <div class="fg"><label>Email</label><input type="email" placeholder="you@email.com" id="s-em"/></div>
+      <div class="fg"><label>Password</label><input type="password" placeholder="Your password" id="s-pw"/></div>
+      <div style="text-align:right;margin:-8px 0 16px;"><a style="font-size:12px;color:var(--blue-600);font-weight:700;cursor:pointer;">Forgot password?</a></div>
+      <button class="submit-btn" onclick="handleSignin()">Login →</button>
+      <div class="mswitch">New to SparkUp? <a onclick="switchTab('register')">Create account</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function openModal(t){document.getElementById('authOverlay').classList.add('open');switchTab(t||'register');}
+function closeModal(){document.getElementById('authOverlay').classList.remove('open');}
+function handleOvClick(e){if(e.target===document.getElementById('authOverlay'))closeModal();}
+function switchTab(t){
+  ['register','signin'].forEach(k=>{
+    document.getElementById('tab-'+(k==='register'?'reg':'sin')).classList.toggle('on',k===t);
+    document.getElementById('mf-'+k).classList.toggle('on',k===t);
+  });
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3200);}
+function handleRegister(){
+  const fn=document.getElementById('r-fn').value.trim(),em=document.getElementById('r-em').value.trim(),pw=document.getElementById('r-pw').value;
+  if(!fn||!em||!pw){toast('Please fill in all required fields.');return;}
+  if(!em.includes('@')){toast('Please enter a valid email.');return;}
+  if(pw.length<8){toast('Password must be at least 8 characters.');return;}
+  toast('Welcome to SparkUp, '+fn+'! Check your email to verify.');closeModal();
+}
+function handleSignin(){
+  const em=document.getElementById('s-em').value.trim(),pw=document.getElementById('s-pw').value;
+  if(!em||!pw){toast('Please enter your email and password.');return;}
+  toast('Logged in successfully! Welcome back.');closeModal();
+}
+function handleContact(){
+  const fn=document.getElementById('cf-fn').value.trim(),em=document.getElementById('cf-em').value.trim();
+  if(!fn||!em){toast('Please enter your name and email.');return;}
+  toast('Enquiry sent! We will get back within 24 hours.');
+  document.getElementById('cf-fn').value='';document.getElementById('cf-em').value='';
+}
+function filterCourse(btn,cat){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.course-card').forEach(c=>{
+    const cats=c.dataset.cat||'';
+    c.style.display=(cat==='all'||cats.includes(cat))?'':'none';
+  });
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
+</script>
+</body>
+</html>
